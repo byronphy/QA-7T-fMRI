@@ -1,4 +1,8 @@
-
+# Coded by Bolin Qin, Center for MRI Research, Peking University, Beijing, China
+# Ref: 
+# Report on a Multicenter fMRI Quality Assurance Protocol
+# Dartmouth fMRI QA: https://www.dartmouth.edu/dbic/research_infrastructure/qualityassurance.html
+# Edited on 2023.10.21
 
 # Useful packages========================================================================================================
 from tkinter import Tk, filedialog   # input the QA.nii.gz data 
