@@ -6,7 +6,6 @@
 
 # Useful packages========================================================================================================
 from tkinter import Tk, filedialog   # input the QA.nii.gz data 
-from scipy.ndimage import uniform_filter  # 用于均值滤波
 from matplotlib.patches import Rectangle  # Draw ROI area
 import numpy as np
 import nibabel as nib
@@ -22,7 +21,6 @@ import cv2
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfMerger
 import os
-import time
 
 
 plt.rcParams['font.sans-serif'] = ['Arial']
