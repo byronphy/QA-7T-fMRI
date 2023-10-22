@@ -89,7 +89,7 @@ def cal_CV(x_range,y_range):
 
 # 0. Title of the Report ====================================================================================================================================
 title = "QA fMRI Report"
-date = '20231020'
+date = '20230518'
 coil_type = 'Nova 8Tx/32Rx Head'
 
 
@@ -175,17 +175,20 @@ poly_det_ord = 3
 X = np.vander(np.arange(1, dyns+1), poly_det_ord+1, increasing=True)
 data_detrend = np.apply_along_axis(detrend_fast, 2, data_raw, X)
 TFN_full = np.std(data_detrend, axis=2)
+TFN_full = np.nan_to_num(np.where(np.isinf(TFN_full), np.nan, TFN_full))
 aver_TFN = np.mean(TFN_full[ROI_x, ROI_y])
 print('TFN summary value = ',aver_TFN)
 
 # 3.3 Signal-to-Fluctuation-Noise Ratio (SFNR) Map
 SFNR_full = np.nan_to_num(time_aver_image / TFN_full)
+SFNR_full = np.nan_to_num(np.where(np.isinf(SFNR_full), np.nan, SFNR_full))
 aver_SFNR = np.mean(SFNR_full[ROI_x, ROI_y])
 print('SFNR summary value = ',aver_SFNR)
 
 # 3.4 Temporal Signal-to-Noise Ratio (tSNR) Map
 time_sd_image = np.std(data_raw, axis=2)
 tSNR_full = np.nan_to_num(time_aver_image / time_sd_image)
+tSNR_full = np.nan_to_num(np.where(np.isinf(tSNR_full), np.nan, tSNR_full))
 aver_tSNR = np.mean(tSNR_full[ROI_x, ROI_y])
 print('tSNR summary value = ',aver_tSNR)
 
@@ -198,7 +201,8 @@ if odd_dynamics.shape[2] > even_dynamics.shape[2]:
 DIFF = np.sum(odd_dynamics, axis=2) - np.sum(even_dynamics, axis=2)
 
 # 3.6 Signal-to-Noise (SNR) Map
-SNR_full = time_aver_image/np.std(DIFF)*np.sqrt(dyns)
+SNR_full = np.nan_to_num(time_aver_image/np.std(DIFF)*np.sqrt(dyns))
+SNR_full = np.nan_to_num(np.where(np.isinf(SNR_full), np.nan, SNR_full))
 variance_summary_value = np.std(DIFF[ROI_x, ROI_y]) ** 2
 signal_summary_value = np.nanmean(time_aver_image[ROI_x, ROI_y])
 SNR = signal_summary_value / np.sqrt(variance_summary_value / dyns)
